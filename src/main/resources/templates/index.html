@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>AutoCare</title>
 </head>
+
 <body>
 
 <h1>AutoCare</h1>
@@ -11,6 +14,16 @@
 <h2>Professional care for your car</h2>
 
 <p>Book a service appointment quickly and easily.</p>
+
+<nav>
+
+    <a th:href="@{/}">Home</a>
+
+    <a th:href="@{/users/login}">Login</a>
+
+    <a th:href="@{/users/register}">Register</a>
+
+</nav>
 
 </body>
 </html>

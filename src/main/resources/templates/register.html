@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Register | AutoCare</title>
+</head>
+
+<body>
+
+<h1>Create Account</h1>
+
+<form th:action="@{/users/register}"
+      th:object="${registerRequest}"
+      method="post">
+
+    <div>
+        <label for="username">Username</label>
+
+        <input id="username"
+               type="text"
+               th:field="*{username}">
+
+        <p th:if="${#fields.hasErrors('username')}"
+           th:errors="*{username}">
+        </p>
+    </div>
+
+    <div>
+        <label for="firstName">First Name</label>
+
+        <input id="firstName"
+               type="text"
+               th:field="*{firstName}">
+
+        <p th:if="${#fields.hasErrors('firstName')}"
+           th:errors="*{firstName}">
+        </p>
+    </div>
+
+    <div>
+        <label for="lastName">Last Name</label>
+
+        <input id="lastName"
+               type="text"
+               th:field="*{lastName}">
+
+        <p th:if="${#fields.hasErrors('lastName')}"
+           th:errors="*{lastName}">
+        </p>
+    </div>
+
+    <div>
+        <label for="password">Password</label>
+
+        <input id="password"
+               type="password"
+               th:field="*{password}">
+
+        <p th:if="${#fields.hasErrors('password')}"
+           th:errors="*{password}">
+        </p>
+    </div>
+
+    <div>
+        <label for="confirmPassword">Confirm Password</label>
+
+        <input id="confirmPassword"
+               type="password"
+               th:field="*{confirmPassword}">
+
+        <p th:if="${#fields.hasErrors('confirmPassword')}"
+           th:errors="*{confirmPassword}">
+        </p>
+    </div>
+
+    <div th:if="${#fields.hasGlobalErrors()}">
+        <p th:each="error : ${#fields.globalErrors()}"
+           th:text="${error}">
+        </p>
+    </div>
+
+    <button type="submit">Register</button>
+
+</form>
+
+<p>
+    Already have an account?
+    <a th:href="@{/users/login}">Login</a>
+</p>
+
+<p>
+    <a th:href="@{/}">Back to Home</a>
+</p>
+
+</body>
+</html>
