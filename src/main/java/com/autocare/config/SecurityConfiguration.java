@@ -11,7 +11,9 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfiguration {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(
+            HttpSecurity http
+    ) throws Exception {
 
         http
                 .authorizeHttpRequests(auth -> auth
@@ -20,21 +22,38 @@ public class SecurityConfiguration {
                                 "/users/login",
                                 "/users/register",
                                 "/css/**",
-                                "/images/**"
+                                "/images/**",
+                                "/error"
                         ).permitAll()
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .anyRequest().authenticated()
+                        .requestMatchers(
+                                "/admin/**"
+                        ).hasRole("ADMIN")
+                        .anyRequest()
+                        .authenticated()
                 )
                 .formLogin(form -> form
-                        .loginPage("/users/login")
-                        .loginProcessingUrl("/users/login")
-                        .defaultSuccessUrl("/", true)
-                        .failureUrl("/users/login?error")
+                        .loginPage(
+                                "/users/login"
+                        )
+                        .loginProcessingUrl(
+                                "/users/login"
+                        )
+                        .defaultSuccessUrl(
+                                "/dashboard",
+                                true
+                        )
+                        .failureUrl(
+                                "/users/login?error"
+                        )
                         .permitAll()
                 )
                 .logout(logout -> logout
-                        .logoutUrl("/users/logout")
-                        .logoutSuccessUrl("/")
+                        .logoutUrl(
+                                "/users/logout"
+                        )
+                        .logoutSuccessUrl(
+                                "/"
+                        )
                 );
 
         return http.build();

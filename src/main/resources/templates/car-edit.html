@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Car | AutoCare</title>
+</head>
+
+<body>
+
+<h1>Edit Car</h1>
+
+<form
+        th:action="@{/cars/edit/{id}(id=${carId})}"
+        th:object="${carRequest}"
+        method="post">
+
+    <div>
+
+        <label for="make">
+            Make
+        </label>
+
+        <input id="make"
+               type="text"
+               th:field="*{make}">
+
+        <p th:if="${#fields.hasErrors('make')}"
+           th:errors="*{make}">
+        </p>
+
+    </div>
+
+    <br>
+
+    <div>
+
+        <label for="model">
+            Model
+        </label>
+
+        <input id="model"
+               type="text"
+               th:field="*{model}">
+
+        <p th:if="${#fields.hasErrors('model')}"
+           th:errors="*{model}">
+        </p>
+
+    </div>
+
+    <br>
+
+    <div>
+
+        <label for="registrationNumber">
+            Registration Number
+        </label>
+
+        <input id="registrationNumber"
+               type="text"
+               th:field="*{registrationNumber}">
+
+        <p th:if="${#fields.hasErrors('registrationNumber')}"
+           th:errors="*{registrationNumber}">
+        </p>
+
+    </div>
+
+    <br>
+
+    <div>
+
+        <label for="productionYear">
+            Production Year
+        </label>
+
+        <input id="productionYear"
+               type="number"
+               th:field="*{productionYear}"
+               min="1886"
+               max="2100">
+
+        <p th:if="${#fields.hasErrors('productionYear')}"
+           th:errors="*{productionYear}">
+        </p>
+
+    </div>
+
+    <div th:if="${#fields.hasGlobalErrors()}">
+
+        <p th:each="error : ${#fields.globalErrors()}"
+           th:text="${error}">
+        </p>
+
+    </div>
+
+    <br>
+
+    <button type="submit">
+        Save Changes
+    </button>
+
+</form>
+
+<br>
+
+<a th:href="@{/cars}">
+    Cancel
+</a>
+
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>My Cars | AutoCare</title>
+</head>
+
+<body>
+
+<h1>My Cars</h1>
+
+<nav>
+
+    <a th:href="@{/dashboard}">
+        Dashboard
+    </a>
+
+    <a th:href="@{/cars}">
+        My Cars
+    </a>
+
+</nav>
+
+<hr>
+
+<p th:if="${param.added}">
+    Car added successfully.
+</p>
+
+<p th:if="${param.edited}">
+    Car updated successfully.
+</p>
+
+<p th:if="${param.deleted}">
+    Car deleted successfully.
+</p>
+
+<a th:href="@{/cars/add}">
+    Add New Car
+</a>
+
+<br><br>
+
+<div th:if="${#lists.isEmpty(cars)}">
+
+    <p>
+        You do not have any cars yet.
+    </p>
+
+    <a th:href="@{/cars/add}">
+        Add your first car
+    </a>
+
+</div>
+
+<table th:unless="${#lists.isEmpty(cars)}"
+       border="1">
+
+    <thead>
+
+    <tr>
+        <th>Make</th>
+        <th>Model</th>
+        <th>Registration Number</th>
+        <th>Year</th>
+        <th>Actions</th>
+    </tr>
+
+    </thead>
+
+    <tbody>
+
+    <tr th:each="car : ${cars}">
+
+        <td th:text="${car.make}"></td>
+
+        <td th:text="${car.model}"></td>
+
+        <td th:text="${car.registrationNumber}"></td>
+
+        <td th:text="${car.productionYear}"></td>
+
+        <td>
+
+            <a th:href="@{/cars/edit/{id}(id=${car.id})}">
+                Edit
+            </a>
+
+            <form
+                    th:action="@{/cars/delete/{id}(id=${car.id})}"
+                    method="post"
+                    style="display:inline;">
+
+                <button type="submit">
+                    Delete
+                </button>
+
+            </form>
+
+        </td>
+
+    </tr>
+
+    </tbody>
+
+</table>
+
+<br>
+
+<a th:href="@{/dashboard}">
+    Back to Dashboard
+</a>
+
+</body>
+</html>

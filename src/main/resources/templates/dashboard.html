@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard | AutoCare</title>
+</head>
+
+<body>
+
+<h1>AutoCare Dashboard</h1>
+
+<p th:text="'Hello, ' + ${username} + '!'">
+</p>
+
+<nav>
+
+  <a th:href="@{/dashboard}">
+    Dashboard
+  </a>
+
+  <a th:href="@{/cars}">
+    My Cars
+  </a>
+
+</nav>
+
+<hr>
+
+<h2>Welcome to AutoCare</h2>
+
+<p>
+  From here you can manage your cars
+  and service appointments.
+</p>
+
+<a th:href="@{/cars}">
+  My Cars
+</a>
+
+<br><br>
+
+<form th:action="@{/users/logout}"
+      method="post">
+
+  <button type="submit">
+    Logout
+  </button>
+
+</form>
+
+</body>
+</html>
