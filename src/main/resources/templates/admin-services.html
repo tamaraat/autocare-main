@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Services | AutoCare</title>
+</head>
+
+<body>
+
+<h1>Manage Services</h1>
+
+<a th:href="@{/admin/services/add}">
+    Add New Service
+</a>
+
+<br><br>
+
+<p th:if="${param.added}">
+    Service added successfully.
+</p>
+
+<p th:if="${param.edited}">
+    Service updated successfully.
+</p>
+
+<p th:if="${param.statusChanged}">
+    Service status changed successfully.
+</p>
+
+<div th:if="${#lists.isEmpty(services)}">
+
+    <p>
+        No services have been created yet.
+    </p>
+
+</div>
+
+<table th:unless="${#lists.isEmpty(services)}"
+       border="1">
+
+    <thead>
+
+    <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Duration</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </tr>
+
+    </thead>
+
+    <tbody>
+
+    <tr th:each="service : ${services}">
+
+        <td th:text="${service.name}">
+        </td>
+
+        <td th:text="${service.price + ' €'}">
+        </td>
+
+        <td th:text="${service.durationMinutes + ' min'}">
+        </td>
+
+        <td th:text="${service.active ? 'ACTIVE' : 'INACTIVE'}">
+        </td>
+
+        <td>
+
+            <a th:href="@{/admin/services/edit/{id}(id=${service.id})}">
+                Edit
+            </a>
+
+            <form
+                    th:action="@{/admin/services/toggle/{id}(id=${service.id})}"
+                    method="post"
+                    style="display:inline;">
+
+                <button
+                        type="submit"
+                        th:text="${service.active ? 'Disable' : 'Enable'}">
+                </button>
+
+            </form>
+
+        </td>
+
+    </tr>
+
+    </tbody>
+
+</table>
+
+<br>
+
+<a th:href="@{/dashboard}">
+    Back to Dashboard
+</a>
+
+</body>
+</html>

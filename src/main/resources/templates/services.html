@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Services | AutoCare</title>
+</head>
+
+<body>
+
+<h1>AutoCare Services</h1>
+
+<nav>
+
+    <a th:href="@{/}">
+        Home
+    </a>
+
+    <a th:href="@{/services}">
+        Services
+    </a>
+
+</nav>
+
+<hr>
+
+<div th:if="${#lists.isEmpty(services)}">
+
+    <p>
+        No services are currently available.
+    </p>
+
+</div>
+
+<table th:unless="${#lists.isEmpty(services)}"
+       border="1">
+
+    <thead>
+
+    <tr>
+        <th>Service</th>
+        <th>Price</th>
+        <th>Duration</th>
+    </tr>
+
+    </thead>
+
+    <tbody>
+
+    <tr th:each="service : ${services}">
+
+        <td th:text="${service.name}">
+        </td>
+
+        <td th:text="${service.price + ' €'}">
+        </td>
+
+        <td th:text="${service.durationMinutes + ' minutes'}">
+        </td>
+
+    </tr>
+
+    </tbody>
+
+</table>
+
+<br>
+
+<a th:href="@{/}">
+    Back to Home
+</a>
+
+</body>
+</html>

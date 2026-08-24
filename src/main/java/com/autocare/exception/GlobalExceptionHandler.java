@@ -44,4 +44,22 @@ public class GlobalExceptionHandler {
 
         return "error";
     }
+    @ExceptionHandler(ServiceOfferNotFoundException.class)
+    public String handleServiceOfferNotFound(
+            ServiceOfferNotFoundException exception,
+            Model model
+    ) {
+
+        model.addAttribute(
+                "errorTitle",
+                "Service Not Found"
+        );
+
+        model.addAttribute(
+                "errorMessage",
+                exception.getMessage()
+        );
+
+        return "error";
+    }
 }
