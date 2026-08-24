@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>My Appointments | AutoCare</title>
+</head>
+
+<body>
+
+<h1>My Appointments</h1>
+
+<nav>
+
+  <a th:href="@{/dashboard}">
+    Dashboard
+  </a>
+
+  <a th:href="@{/cars}">
+    My Cars
+  </a>
+
+  <a th:href="@{/appointments}">
+    My Appointments
+  </a>
+
+</nav>
+
+<hr>
+
+<p th:if="${param.booked}">
+  Appointment booked successfully.
+</p>
+
+<p th:if="${param.cancelled}">
+  Appointment cancelled successfully.
+</p>
+
+<a th:href="@{/appointments/add}">
+  Book New Appointment
+</a>
+
+<br><br>
+
+<div th:if="${#lists.isEmpty(appointments)}">
+
+  <p>
+    You do not have any appointments yet.
+  </p>
+
+</div>
+
+<table
+        th:unless="${#lists.isEmpty(appointments)}"
+        border="1">
+
+  <thead>
+
+  <tr>
+    <th>Car</th>
+    <th>Registration</th>
+    <th>Service</th>
+    <th>Date and Time</th>
+    <th>Status</th>
+    <th>Action</th>
+  </tr>
+
+  </thead>
+
+  <tbody>
+
+  <tr th:each="appointment : ${appointments}">
+
+    <td
+            th:text="${appointment.car.make + ' ' + appointment.car.model}">
+    </td>
+
+    <td
+            th:text="${appointment.car.registrationNumber}">
+    </td>
+
+    <td
+            th:text="${appointment.serviceOffer.name}">
+    </td>
+
+    <td
+            th:text="${#temporals.format(appointment.appointmentTime, 'dd.MM.yyyy HH:mm')}">
+    </td>
+
+    <td
+            th:text="${appointment.status}">
+    </td>
+
+    <td>
+
+      <form
+              th:if="${appointment.status.name() != 'CANCELLED' and appointment.status.name() != 'COMPLETED'}"
+              th:action="@{/appointments/cancel/{id}(id=${appointment.id})}"
+              method="post">
+
+        <button type="submit">
+          Cancel
+        </button>
+
+      </form>
+
+      <span
+              th:if="${appointment.status.name() == 'CANCELLED'}">
+                Cancelled
+            </span>
+
+      <span
+              th:if="${appointment.status.name() == 'COMPLETED'}">
+                Completed
+            </span>
+
+    </td>
+
+  </tr>
+
+  </tbody>
+
+</table>
+
+<br>
+
+<a th:href="@{/dashboard}">
+  Back to Dashboard
+</a>
+
+</body>
+</html>

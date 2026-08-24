@@ -62,4 +62,22 @@ public class GlobalExceptionHandler {
 
         return "error";
     }
+    @ExceptionHandler(AppointmentNotFoundException.class)
+    public String handleAppointmentNotFound(
+            AppointmentNotFoundException exception,
+            Model model
+    ) {
+
+        model.addAttribute(
+                "errorTitle",
+                "Appointment Not Found"
+        );
+
+        model.addAttribute(
+                "errorMessage",
+                exception.getMessage()
+        );
+
+        return "error";
+    }
 }

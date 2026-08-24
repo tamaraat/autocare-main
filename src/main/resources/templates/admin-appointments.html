@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Appointments | AutoCare</title>
+</head>
+
+<body>
+
+<h1>Manage Appointments</h1>
+
+<p th:if="${param.confirmed}">
+    Appointment confirmed successfully.
+</p>
+
+<div th:if="${#lists.isEmpty(appointments)}">
+
+    <p>
+        There are no appointments yet.
+    </p>
+
+</div>
+
+<table
+        th:unless="${#lists.isEmpty(appointments)}"
+        border="1">
+
+    <thead>
+
+    <tr>
+        <th>Customer</th>
+        <th>Car</th>
+        <th>Registration</th>
+        <th>Service</th>
+        <th>Date</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+
+    </thead>
+
+    <tbody>
+
+    <tr th:each="appointment : ${appointments}">
+
+        <td
+                th:text="${appointment.car.owner.username}">
+        </td>
+
+        <td
+                th:text="${appointment.car.make + ' ' + appointment.car.model}">
+        </td>
+
+        <td
+                th:text="${appointment.car.registrationNumber}">
+        </td>
+
+        <td
+                th:text="${appointment.serviceOffer.name}">
+        </td>
+
+        <td
+                th:text="${#temporals.format(appointment.appointmentTime, 'dd.MM.yyyy HH:mm')}">
+        </td>
+
+        <td
+                th:text="${appointment.status}">
+        </td>
+
+        <td>
+
+            <form
+                    th:if="${appointment.status.name() == 'PENDING'}"
+                    th:action="@{/admin/appointments/confirm/{id}(id=${appointment.id})}"
+                    method="post">
+
+                <button type="submit">
+                    Confirm
+                </button>
+
+            </form>
+
+            <span
+                    th:unless="${appointment.status.name() == 'PENDING'}"
+                    th:text="${appointment.status}">
+            </span>
+
+        </td>
+
+    </tr>
+
+    </tbody>
+
+</table>
+
+<br>
+
+<a th:href="@{/dashboard}">
+    Back to Dashboard
+</a>
+
+</body>
+</html>
