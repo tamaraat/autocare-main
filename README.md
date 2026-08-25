@@ -28,6 +28,16 @@ The applications run independently on separate ports and use separate MySQL data
 
 ## Application Architecture
 
+## GitHub Repositories
+
+Main application:
+
+https://github.com/tamaraat/autocare-main
+
+REST microservice:
+
+https://github.com/tamaraat/parts-service
+
 ### Main Application
 
 The main application runs on:
