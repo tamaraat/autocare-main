@@ -3,111 +3,140 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
+
     <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
     <title>Add Spare Part | AutoCare</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
 </head>
 
 <body>
 
-<h1>Add Spare Part</h1>
+<nav>
 
-<form
-        th:action="@{/admin/parts/add}"
-        th:object="${sparePartRequest}"
-        method="post">
-
-    <div>
-
-        <label for="name">
-            Part Name
-        </label>
-
-        <input
-                id="name"
-                type="text"
-                th:field="*{name}"
-                placeholder="Oil Filter">
-
-        <p th:if="${#fields.hasErrors('name')}"
-           th:errors="*{name}">
-        </p>
-
+    <div class="logo">
+        AutoCare Admin
     </div>
 
-    <br>
+    <a th:href="@{/dashboard}">
+        Dashboard
+    </a>
 
-    <div>
+    <a th:href="@{/admin/parts}">
+        Spare Parts
+    </a>
 
-        <label for="partNumber">
-            Part Number
-        </label>
+</nav>
 
-        <input
-                id="partNumber"
-                type="text"
-                th:field="*{partNumber}"
-                placeholder="OF-123">
+<div class="container">
 
-        <p th:if="${#fields.hasErrors('partNumber')}"
-           th:errors="*{partNumber}">
+    <header class="page-header">
+
+        <h1>
+            Add Spare Part
+        </h1>
+
+        <p>
+            Add a new item to the AutoCare
+            parts inventory.
         </p>
 
-    </div>
+    </header>
 
-    <br>
+    <form th:action="@{/admin/parts/add}"
+          th:object="${sparePartRequest}"
+          method="post">
 
-    <div>
+        <div>
 
-        <label for="quantity">
-            Quantity
-        </label>
+            <label for="name">
+                Part Name
+            </label>
 
-        <input
-                id="quantity"
-                type="number"
-                min="0"
-                th:field="*{quantity}">
+            <input id="name"
+                   type="text"
+                   th:field="*{name}"
+                   placeholder="Oil Filter">
 
-        <p th:if="${#fields.hasErrors('quantity')}"
-           th:errors="*{quantity}">
-        </p>
+            <p th:if="${#fields.hasErrors('name')}"
+               th:errors="*{name}">
+            </p>
 
-    </div>
+        </div>
 
-    <br>
+        <div>
 
-    <div>
+            <label for="partNumber">
+                Part Number
+            </label>
 
-        <label for="price">
-            Price
-        </label>
+            <input id="partNumber"
+                   type="text"
+                   th:field="*{partNumber}"
+                   placeholder="OF-123">
 
-        <input
-                id="price"
-                type="number"
-                step="0.01"
-                min="0.01"
-                th:field="*{price}">
+            <p th:if="${#fields.hasErrors('partNumber')}"
+               th:errors="*{partNumber}">
+            </p>
 
-        <p th:if="${#fields.hasErrors('price')}"
-           th:errors="*{price}">
-        </p>
+        </div>
 
-    </div>
+        <div>
 
-    <br>
+            <label for="quantity">
+                Quantity
+            </label>
 
-    <button type="submit">
-        Add Part
-    </button>
+            <input id="quantity"
+                   type="number"
+                   min="0"
+                   th:field="*{quantity}">
 
-</form>
+            <p th:if="${#fields.hasErrors('quantity')}"
+               th:errors="*{quantity}">
+            </p>
 
-<br>
+        </div>
 
-<a th:href="@{/admin/parts}">
-    Cancel
-</a>
+        <div>
+
+            <label for="price">
+                Price (€)
+            </label>
+
+            <input id="price"
+                   type="number"
+                   step="0.01"
+                   min="0.01"
+                   th:field="*{price}">
+
+            <p th:if="${#fields.hasErrors('price')}"
+               th:errors="*{price}">
+            </p>
+
+        </div>
+
+        <div class="actions">
+
+            <button type="submit">
+                Add Part
+            </button>
+
+            <a th:href="@{/admin/parts}">
+                Cancel
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
 
 </body>
 </html>

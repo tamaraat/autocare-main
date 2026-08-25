@@ -3,102 +3,165 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
+
     <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
     <title>Manage Services | AutoCare</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
 </head>
 
 <body>
 
-<h1>Manage Services</h1>
+<nav>
 
-<a th:href="@{/admin/services/add}">
-    Add New Service
-</a>
+    <div class="logo">
+        AutoCare Admin
+    </div>
 
-<br><br>
+    <a th:href="@{/dashboard}">
+        Dashboard
+    </a>
 
-<p th:if="${param.added}">
-    Service added successfully.
-</p>
+    <a th:href="@{/admin/services}">
+        Services
+    </a>
 
-<p th:if="${param.edited}">
-    Service updated successfully.
-</p>
+    <a th:href="@{/admin/appointments}">
+        Appointments
+    </a>
 
-<p th:if="${param.statusChanged}">
-    Service status changed successfully.
-</p>
+    <a th:href="@{/admin/parts}">
+        Parts
+    </a>
 
-<div th:if="${#lists.isEmpty(services)}">
+    <a th:href="@{/admin/users}">
+        Users
+    </a>
 
-    <p>
-        No services have been created yet.
+</nav>
+
+<div class="container">
+
+    <header class="page-header">
+
+        <h1>
+            Manage Services
+        </h1>
+
+        <p>
+            Create, edit and control the services
+            offered by AutoCare.
+        </p>
+
+    </header>
+
+    <p class="success-message"
+       th:if="${param.added}">
+        Service added successfully.
     </p>
 
+    <p class="success-message"
+       th:if="${param.edited}">
+        Service updated successfully.
+    </p>
+
+    <p class="success-message"
+       th:if="${param.statusChanged}">
+        Service status changed successfully.
+    </p>
+
+    <div class="actions">
+
+        <a th:href="@{/admin/services/add}">
+            + Add New Service
+        </a>
+
+    </div>
+
+    <div class="card"
+         th:if="${#lists.isEmpty(services)}">
+
+        <h3>
+            No services yet
+        </h3>
+
+        <p>
+            Create your first AutoCare service.
+        </p>
+
+    </div>
+
+    <table th:unless="${#lists.isEmpty(services)}">
+
+        <thead>
+
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Duration</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+
+        </thead>
+
+        <tbody>
+
+        <tr th:each="service : ${services}">
+
+            <td>
+                <strong th:text="${service.name}">
+                </strong>
+            </td>
+
+            <td th:text="${service.price + ' €'}">
+            </td>
+
+            <td th:text="${service.durationMinutes + ' min'}">
+            </td>
+
+            <td>
+
+                <span class="badge"
+                      th:text="${service.active ? 'ACTIVE' : 'INACTIVE'}">
+                </span>
+
+            </td>
+
+            <td>
+
+                <div class="actions">
+
+                    <a th:href="@{/admin/services/edit/{id}(id=${service.id})}">
+                        Edit
+                    </a>
+
+                    <form th:action="@{/admin/services/toggle/{id}(id=${service.id})}"
+                          method="post">
+
+                        <button type="submit"
+                                th:text="${service.active ? 'Disable' : 'Enable'}">
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </td>
+
+        </tr>
+
+        </tbody>
+
+    </table>
+
 </div>
-
-<table th:unless="${#lists.isEmpty(services)}"
-       border="1">
-
-    <thead>
-
-    <tr>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Duration</th>
-        <th>Status</th>
-        <th>Actions</th>
-    </tr>
-
-    </thead>
-
-    <tbody>
-
-    <tr th:each="service : ${services}">
-
-        <td th:text="${service.name}">
-        </td>
-
-        <td th:text="${service.price + ' €'}">
-        </td>
-
-        <td th:text="${service.durationMinutes + ' min'}">
-        </td>
-
-        <td th:text="${service.active ? 'ACTIVE' : 'INACTIVE'}">
-        </td>
-
-        <td>
-
-            <a th:href="@{/admin/services/edit/{id}(id=${service.id})}">
-                Edit
-            </a>
-
-            <form
-                    th:action="@{/admin/services/toggle/{id}(id=${service.id})}"
-                    method="post"
-                    style="display:inline;">
-
-                <button
-                        type="submit"
-                        th:text="${service.active ? 'Disable' : 'Enable'}">
-                </button>
-
-            </form>
-
-        </td>
-
-    </tr>
-
-    </tbody>
-
-</table>
-
-<br>
-
-<a th:href="@{/dashboard}">
-    Back to Dashboard
-</a>
 
 </body>
 </html>

@@ -3,56 +3,110 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
+
     <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
     <title>Login | AutoCare</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
 </head>
 
 <body>
 
-<h1>Login</h1>
+<div class="auth-page">
 
-<p th:if="${param.registered}">
-    Registration successful. You can now log in.
-</p>
+    <div class="auth-card">
 
-<p th:if="${param.error}">
-    Invalid username or password.
-</p>
+        <h1>
+            AutoCare
+        </h1>
 
-<p th:if="${param.logout}">
-    You have been logged out.
-</p>
+        <p style="text-align: center;">
+            Welcome back. Sign in to continue.
+        </p>
 
-<form th:action="@{/users/login}" method="post">
+        <p class="success-message"
+           th:if="${param.registered}">
+            Registration successful.
+            You can now log in.
+        </p>
 
-    <div>
-        <label for="username">Username</label>
+        <p class="error-message"
+           th:if="${param.error}">
+            Invalid username or password.
+        </p>
 
-        <input id="username"
-               type="text"
-               name="username">
+        <p class="success-message"
+           th:if="${param.logout}">
+            You have been logged out successfully.
+        </p>
+
+        <form th:action="@{/users/login}"
+              method="post">
+
+            <div>
+
+                <label for="username">
+                    Username
+                </label>
+
+                <input id="username"
+                       type="text"
+                       name="username"
+                       autocomplete="username"
+                       placeholder="Enter your username"
+                       required>
+
+            </div>
+
+            <div>
+
+                <label for="password">
+                    Password
+                </label>
+
+                <input id="password"
+                       type="password"
+                       name="password"
+                       autocomplete="current-password"
+                       placeholder="Enter your password"
+                       required>
+
+            </div>
+
+            <button type="submit"
+                    style="width: 100%;">
+                Login
+            </button>
+
+        </form>
+
+        <p style="text-align: center;">
+
+            Don't have an account?
+
+            <a th:href="@{/users/register}">
+                Register
+            </a>
+
+        </p>
+
+        <p style="text-align: center;">
+
+            <a th:href="@{/}">
+                ← Back to Home
+            </a>
+
+        </p>
+
     </div>
 
-    <div>
-        <label for="password">Password</label>
-
-        <input id="password"
-               type="password"
-               name="password">
-    </div>
-
-    <button type="submit">Login</button>
-
-</form>
-
-<p>
-    Don't have an account?
-    <a th:href="@{/users/register}">Register</a>
-</p>
-
-<p>
-    <a th:href="@{/}">Back to Home</a>
-</p>
+</div>
 
 </body>
 </html>

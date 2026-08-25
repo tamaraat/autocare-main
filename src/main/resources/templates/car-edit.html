@@ -4,111 +4,139 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
     <title>Edit Car | AutoCare</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
 </head>
 
 <body>
 
-<h1>Edit Car</h1>
+<nav>
+    <div class="logo">AutoCare</div>
 
-<form
-        th:action="@{/cars/edit/{id}(id=${carId})}"
-        th:object="${carRequest}"
-        method="post">
+    <a th:href="@{/dashboard}">
+        Dashboard
+    </a>
 
-    <div>
+    <a th:href="@{/cars}">
+        My Cars
+    </a>
 
-        <label for="make">
-            Make
-        </label>
+    <a th:href="@{/appointments}">
+        Appointments
+    </a>
+</nav>
 
-        <input id="make"
-               type="text"
-               th:field="*{make}">
+<div class="container">
 
-        <p th:if="${#fields.hasErrors('make')}"
-           th:errors="*{make}">
+    <header class="page-header">
+
+        <h1>Edit Vehicle</h1>
+
+        <p>
+            Update your vehicle information.
         </p>
 
-    </div>
+    </header>
 
-    <br>
+    <form th:action="@{/cars/edit/{id}(id=${carId})}"
+          th:object="${carRequest}"
+          method="post">
 
-    <div>
+        <div>
 
-        <label for="model">
-            Model
-        </label>
+            <label for="make">
+                Make
+            </label>
 
-        <input id="model"
-               type="text"
-               th:field="*{model}">
+            <input id="make"
+                   type="text"
+                   th:field="*{make}">
 
-        <p th:if="${#fields.hasErrors('model')}"
-           th:errors="*{model}">
-        </p>
+            <p th:if="${#fields.hasErrors('make')}"
+               th:errors="*{make}">
+            </p>
 
-    </div>
+        </div>
 
-    <br>
+        <div>
 
-    <div>
+            <label for="model">
+                Model
+            </label>
 
-        <label for="registrationNumber">
-            Registration Number
-        </label>
+            <input id="model"
+                   type="text"
+                   th:field="*{model}">
 
-        <input id="registrationNumber"
-               type="text"
-               th:field="*{registrationNumber}">
+            <p th:if="${#fields.hasErrors('model')}"
+               th:errors="*{model}">
+            </p>
 
-        <p th:if="${#fields.hasErrors('registrationNumber')}"
-           th:errors="*{registrationNumber}">
-        </p>
+        </div>
 
-    </div>
+        <div>
 
-    <br>
+            <label for="registrationNumber">
+                Registration Number
+            </label>
 
-    <div>
+            <input id="registrationNumber"
+                   type="text"
+                   th:field="*{registrationNumber}">
 
-        <label for="productionYear">
-            Production Year
-        </label>
+            <p th:if="${#fields.hasErrors('registrationNumber')}"
+               th:errors="*{registrationNumber}">
+            </p>
 
-        <input id="productionYear"
-               type="number"
-               th:field="*{productionYear}"
-               min="1886"
-               max="2100">
+        </div>
 
-        <p th:if="${#fields.hasErrors('productionYear')}"
-           th:errors="*{productionYear}">
-        </p>
+        <div>
 
-    </div>
+            <label for="productionYear">
+                Production Year
+            </label>
 
-    <div th:if="${#fields.hasGlobalErrors()}">
+            <input id="productionYear"
+                   type="number"
+                   th:field="*{productionYear}"
+                   min="1886"
+                   max="2100">
 
-        <p th:each="error : ${#fields.globalErrors()}"
-           th:text="${error}">
-        </p>
+            <p th:if="${#fields.hasErrors('productionYear')}"
+               th:errors="*{productionYear}">
+            </p>
 
-    </div>
+        </div>
 
-    <br>
+        <div class="error-message"
+             th:if="${#fields.hasGlobalErrors()}">
 
-    <button type="submit">
-        Save Changes
-    </button>
+            <p th:each="error : ${#fields.globalErrors()}"
+               th:text="${error}">
+            </p>
 
-</form>
+        </div>
 
-<br>
+        <div class="actions">
 
-<a th:href="@{/cars}">
-    Cancel
-</a>
+            <button type="submit">
+                Save Changes
+            </button>
+
+            <a th:href="@{/cars}">
+                Cancel
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
 
 </body>
 </html>

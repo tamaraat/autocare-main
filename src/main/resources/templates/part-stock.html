@@ -3,50 +3,88 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
+
     <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
     <title>Update Stock | AutoCare</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
 </head>
 
 <body>
 
-<h1>Update Stock Quantity</h1>
+<nav>
 
-<form
-        th:action="@{/admin/parts/stock/{id}(id=${partId})}"
-        th:object="${stockUpdateRequest}"
-        method="post">
-
-    <div>
-
-        <label for="quantity">
-            New Quantity
-        </label>
-
-        <input
-                id="quantity"
-                type="number"
-                min="0"
-                th:field="*{quantity}">
-
-        <p th:if="${#fields.hasErrors('quantity')}"
-           th:errors="*{quantity}">
-        </p>
-
+    <div class="logo">
+        AutoCare Admin
     </div>
 
-    <br>
+    <a th:href="@{/dashboard}">
+        Dashboard
+    </a>
 
-    <button type="submit">
-        Update Stock
-    </button>
+    <a th:href="@{/admin/parts}">
+        Spare Parts
+    </a>
 
-</form>
+</nav>
 
-<br>
+<div class="container">
 
-<a th:href="@{/admin/parts}">
-    Cancel
-</a>
+    <header class="page-header">
+
+        <h1>
+            Update Stock
+        </h1>
+
+        <p>
+            Enter the new available quantity
+            for this spare part.
+        </p>
+
+    </header>
+
+    <form th:action="@{/admin/parts/stock/{id}(id=${partId})}"
+          th:object="${stockUpdateRequest}"
+          method="post">
+
+        <div>
+
+            <label for="quantity">
+                New Quantity
+            </label>
+
+            <input id="quantity"
+                   type="number"
+                   min="0"
+                   th:field="*{quantity}">
+
+            <p th:if="${#fields.hasErrors('quantity')}"
+               th:errors="*{quantity}">
+            </p>
+
+        </div>
+
+        <div class="actions">
+
+            <button type="submit">
+                Update Stock
+            </button>
+
+            <a th:href="@{/admin/parts}">
+                Cancel
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
 
 </body>
 </html>

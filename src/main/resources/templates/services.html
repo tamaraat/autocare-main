@@ -1,17 +1,26 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
     <title>Services | AutoCare</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
 </head>
 
 <body>
 
-<h1>AutoCare Services</h1>
-
 <nav>
+
+    <div class="logo">
+        AutoCare
+    </div>
 
     <a th:href="@{/}">
         Home
@@ -21,55 +30,86 @@
         Services
     </a>
 
+    <a sec:authorize="isAnonymous()"
+       th:href="@{/users/login}">
+        Login
+    </a>
+
+    <a sec:authorize="isAnonymous()"
+       th:href="@{/users/register}">
+        Register
+    </a>
+
+    <a sec:authorize="isAuthenticated()"
+       th:href="@{/dashboard}">
+        Dashboard
+    </a>
+
 </nav>
 
-<hr>
+<div class="container">
 
-<div th:if="${#lists.isEmpty(services)}">
+    <header class="page-header">
 
-    <p>
-        No services are currently available.
-    </p>
+        <h1>
+            AutoCare Services
+        </h1>
+
+        <p>
+            Explore our available maintenance
+            and repair services.
+        </p>
+
+    </header>
+
+    <div class="card"
+         th:if="${#lists.isEmpty(services)}">
+
+        <h3>
+            No services available
+        </h3>
+
+        <p>
+            There are currently no active
+            AutoCare services.
+        </p>
+
+    </div>
+
+    <div class="card-grid"
+         th:unless="${#lists.isEmpty(services)}">
+
+        <article class="card"
+                 th:each="service : ${services}">
+
+            <h3 th:text="${service.name}">
+                Service
+            </h3>
+
+            <p>
+                <strong>Price:</strong>
+
+                <span th:text="${service.price + ' €'}">
+                </span>
+            </p>
+
+            <p>
+                <strong>Duration:</strong>
+
+                <span th:text="${service.durationMinutes + ' minutes'}">
+                </span>
+            </p>
+
+            <a sec:authorize="isAuthenticated()"
+               th:href="@{/appointments/add}">
+                Book this service →
+            </a>
+
+        </article>
+
+    </div>
 
 </div>
-
-<table th:unless="${#lists.isEmpty(services)}"
-       border="1">
-
-    <thead>
-
-    <tr>
-        <th>Service</th>
-        <th>Price</th>
-        <th>Duration</th>
-    </tr>
-
-    </thead>
-
-    <tbody>
-
-    <tr th:each="service : ${services}">
-
-        <td th:text="${service.name}">
-        </td>
-
-        <td th:text="${service.price + ' €'}">
-        </td>
-
-        <td th:text="${service.durationMinutes + ' minutes'}">
-        </td>
-
-    </tr>
-
-    </tbody>
-
-</table>
-
-<br>
-
-<a th:href="@{/}">
-    Back to Home
-</a>
 
 </body>
 </html>

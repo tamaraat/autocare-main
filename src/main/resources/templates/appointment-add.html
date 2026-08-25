@@ -3,138 +3,189 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
+
     <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
     <title>Book Appointment | AutoCare</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
 </head>
 
 <body>
 
-<h1>Book Service Appointment</h1>
+<nav>
 
-<div th:if="${#lists.isEmpty(cars)}">
+    <div class="logo">
+        AutoCare
+    </div>
 
-    <p>
-        You need to add a car before
-        booking an appointment.
-    </p>
-
-    <a th:href="@{/cars/add}">
-        Add Car
+    <a th:href="@{/dashboard}">
+        Dashboard
     </a>
 
+    <a th:href="@{/cars}">
+        My Cars
+    </a>
+
+    <a th:href="@{/appointments}">
+        Appointments
+    </a>
+
+    <a th:href="@{/services}">
+        Services
+    </a>
+
+</nav>
+
+<div class="container">
+
+    <header class="page-header">
+
+        <h1>
+            Book an Appointment
+        </h1>
+
+        <p>
+            Select your vehicle, choose a service
+            and pick a convenient date and time.
+        </p>
+
+    </header>
+
+    <div class="card"
+         th:if="${#lists.isEmpty(cars)}">
+
+        <h3>
+            Add a vehicle first
+        </h3>
+
+        <p>
+            You need at least one vehicle before
+            you can book an appointment.
+        </p>
+
+        <a th:href="@{/cars/add}">
+            Add Car →
+        </a>
+
+    </div>
+
+    <div class="card"
+         th:if="${#lists.isEmpty(services)}">
+
+        <h3>
+            No services available
+        </h3>
+
+        <p>
+            There are currently no active
+            service offers.
+        </p>
+
+    </div>
+
+    <form th:unless="${#lists.isEmpty(cars) or #lists.isEmpty(services)}"
+          th:action="@{/appointments/add}"
+          th:object="${appointmentRequest}"
+          method="post">
+
+        <div>
+
+            <label for="carId">
+                Vehicle
+            </label>
+
+            <select id="carId"
+                    th:field="*{carId}">
+
+                <option value="">
+                    Select your vehicle
+                </option>
+
+                <option th:each="car : ${cars}"
+                        th:value="${car.id}"
+                        th:text="${car.make + ' ' + car.model + ' — ' + car.registrationNumber}">
+                </option>
+
+            </select>
+
+            <p th:if="${#fields.hasErrors('carId')}"
+               th:errors="*{carId}">
+            </p>
+
+        </div>
+
+        <div>
+
+            <label for="serviceOfferId">
+                Service
+            </label>
+
+            <select id="serviceOfferId"
+                    th:field="*{serviceOfferId}">
+
+                <option value="">
+                    Select a service
+                </option>
+
+                <option th:each="service : ${services}"
+                        th:value="${service.id}"
+                        th:text="${service.name + ' — ' + service.price + ' €'}">
+                </option>
+
+            </select>
+
+            <p th:if="${#fields.hasErrors('serviceOfferId')}"
+               th:errors="*{serviceOfferId}">
+            </p>
+
+        </div>
+
+        <div>
+
+            <label for="appointmentTime">
+                Date and Time
+            </label>
+
+            <input id="appointmentTime"
+                   type="datetime-local"
+                   th:field="*{appointmentTime}">
+
+            <p th:if="${#fields.hasErrors('appointmentTime')}"
+               th:errors="*{appointmentTime}">
+            </p>
+
+        </div>
+
+        <div class="error-message"
+             th:if="${#fields.hasGlobalErrors()}">
+
+            <p th:each="error : ${#fields.globalErrors()}"
+               th:text="${error}">
+            </p>
+
+        </div>
+
+        <div class="actions">
+
+            <button type="submit">
+                Book Appointment
+            </button>
+
+            <a th:href="@{/appointments}">
+                Cancel
+            </a>
+
+        </div>
+
+    </form>
+
 </div>
-
-<div th:if="${#lists.isEmpty(services)}">
-
-    <p>
-        There are currently no available
-        service offers.
-    </p>
-
-</div>
-
-<form
-        th:unless="${#lists.isEmpty(cars) or #lists.isEmpty(services)}"
-        th:action="@{/appointments/add}"
-        th:object="${appointmentRequest}"
-        method="post">
-
-    <div>
-
-        <label for="carId">
-            Car
-        </label>
-
-        <select id="carId"
-                th:field="*{carId}">
-
-            <option value="">
-                Select your car
-            </option>
-
-            <option
-                    th:each="car : ${cars}"
-                    th:value="${car.id}"
-                    th:text="${car.make + ' ' + car.model + ' - ' + car.registrationNumber}">
-            </option>
-
-        </select>
-
-        <p th:if="${#fields.hasErrors('carId')}"
-           th:errors="*{carId}">
-        </p>
-
-    </div>
-
-    <br>
-
-    <div>
-
-        <label for="serviceOfferId">
-            Service
-        </label>
-
-        <select id="serviceOfferId"
-                th:field="*{serviceOfferId}">
-
-            <option value="">
-                Select service
-            </option>
-
-            <option
-                    th:each="service : ${services}"
-                    th:value="${service.id}"
-                    th:text="${service.name + ' - ' + service.price + ' €'}">
-            </option>
-
-        </select>
-
-        <p th:if="${#fields.hasErrors('serviceOfferId')}"
-           th:errors="*{serviceOfferId}">
-        </p>
-
-    </div>
-
-    <br>
-
-    <div>
-
-        <label for="appointmentTime">
-            Date and Time
-        </label>
-
-        <input
-                id="appointmentTime"
-                type="datetime-local"
-                th:field="*{appointmentTime}">
-
-        <p th:if="${#fields.hasErrors('appointmentTime')}"
-           th:errors="*{appointmentTime}">
-        </p>
-
-    </div>
-
-    <div th:if="${#fields.hasGlobalErrors()}">
-
-        <p th:each="error : ${#fields.globalErrors()}"
-           th:text="${error}">
-        </p>
-
-    </div>
-
-    <br>
-
-    <button type="submit">
-        Book Appointment
-    </button>
-
-</form>
-
-<br>
-
-<a th:href="@{/appointments}">
-    Back to My Appointments
-</a>
 
 </body>
 </html>

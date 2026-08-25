@@ -4,114 +4,132 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
     <title>Add Car | AutoCare</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
 </head>
 
 <body>
 
-<h1>Add Car</h1>
+<nav>
+    <div class="logo">AutoCare</div>
 
-<form th:action="@{/cars/add}"
-      th:object="${carRequest}"
-      method="post">
+    <a th:href="@{/dashboard}">
+        Dashboard
+    </a>
 
-    <div>
+    <a th:href="@{/cars}">
+        My Cars
+    </a>
 
-        <label for="make">
-            Make
-        </label>
+    <a th:href="@{/appointments}">
+        Appointments
+    </a>
+</nav>
 
-        <input id="make"
-               type="text"
-               th:field="*{make}"
-               placeholder="BMW">
+<div class="container">
 
-        <p th:if="${#fields.hasErrors('make')}"
-           th:errors="*{make}">
+    <header class="page-header">
+        <h1>Add a Vehicle</h1>
+
+        <p>
+            Enter your vehicle information below.
         </p>
+    </header>
 
-    </div>
+    <form th:action="@{/cars/add}"
+          th:object="${carRequest}"
+          method="post">
 
-    <br>
+        <div>
+            <label for="make">
+                Make
+            </label>
 
-    <div>
+            <input id="make"
+                   type="text"
+                   th:field="*{make}"
+                   placeholder="e.g. BMW">
 
-        <label for="model">
-            Model
-        </label>
+            <p th:if="${#fields.hasErrors('make')}"
+               th:errors="*{make}">
+            </p>
+        </div>
 
-        <input id="model"
-               type="text"
-               th:field="*{model}"
-               placeholder="320d">
+        <div>
+            <label for="model">
+                Model
+            </label>
 
-        <p th:if="${#fields.hasErrors('model')}"
-           th:errors="*{model}">
-        </p>
+            <input id="model"
+                   type="text"
+                   th:field="*{model}"
+                   placeholder="e.g. X5">
 
-    </div>
+            <p th:if="${#fields.hasErrors('model')}"
+               th:errors="*{model}">
+            </p>
+        </div>
 
-    <br>
+        <div>
+            <label for="registrationNumber">
+                Registration Number
+            </label>
 
-    <div>
+            <input id="registrationNumber"
+                   type="text"
+                   th:field="*{registrationNumber}"
+                   placeholder="e.g. CA1234AB">
 
-        <label for="registrationNumber">
-            Registration Number
-        </label>
+            <p th:if="${#fields.hasErrors('registrationNumber')}"
+               th:errors="*{registrationNumber}">
+            </p>
+        </div>
 
-        <input id="registrationNumber"
-               type="text"
-               th:field="*{registrationNumber}"
-               placeholder="CB1234AB">
+        <div>
+            <label for="productionYear">
+                Production Year
+            </label>
 
-        <p th:if="${#fields.hasErrors('registrationNumber')}"
-           th:errors="*{registrationNumber}">
-        </p>
+            <input id="productionYear"
+                   type="number"
+                   th:field="*{productionYear}"
+                   min="1886"
+                   max="2100"
+                   placeholder="2022">
 
-    </div>
+            <p th:if="${#fields.hasErrors('productionYear')}"
+               th:errors="*{productionYear}">
+            </p>
+        </div>
 
-    <br>
+        <div class="error-message"
+             th:if="${#fields.hasGlobalErrors()}">
 
-    <div>
+            <p th:each="error : ${#fields.globalErrors()}"
+               th:text="${error}">
+            </p>
+        </div>
 
-        <label for="productionYear">
-            Production Year
-        </label>
+        <div class="actions">
 
-        <input id="productionYear"
-               type="number"
-               th:field="*{productionYear}"
-               min="1886"
-               max="2100"
-               placeholder="2020">
+            <button type="submit">
+                Save Car
+            </button>
 
-        <p th:if="${#fields.hasErrors('productionYear')}"
-           th:errors="*{productionYear}">
-        </p>
+            <a th:href="@{/cars}">
+                Cancel
+            </a>
 
-    </div>
+        </div>
 
-    <div th:if="${#fields.hasGlobalErrors()}">
+    </form>
 
-        <p th:each="error : ${#fields.globalErrors()}"
-           th:text="${error}">
-        </p>
-
-    </div>
-
-    <br>
-
-    <button type="submit">
-        Save Car
-    </button>
-
-</form>
-
-<br>
-
-<a th:href="@{/cars}">
-    Back to My Cars
-</a>
+</div>
 
 </body>
 </html>

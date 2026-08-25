@@ -4,25 +4,29 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
+
   <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
   <title>Dashboard | AutoCare</title>
+
+  <link rel="stylesheet"
+        th:href="@{/css/style.css}">
+
 </head>
 
 <body>
 
-<h1>AutoCare Dashboard</h1>
-
-<p th:text="'Hello, ' + ${username} + '!'">
-</p>
-
 <nav>
+
+  <div class="logo">
+    AutoCare
+  </div>
 
   <a th:href="@{/dashboard}">
     Dashboard
-  </a>
-
-  <a th:href="@{/users/profile}">
-    My Profile
   </a>
 
   <a th:href="@{/cars}">
@@ -30,66 +34,203 @@
   </a>
 
   <a th:href="@{/appointments}">
-    My Appointments
+    Appointments
+  </a>
+
+  <a th:href="@{/services}">
+    Services
+  </a>
+
+  <a th:href="@{/users/profile}">
+    Profile
   </a>
 
 </nav>
 
-<hr>
+<div class="container">
 
-<h2>Welcome to AutoCare</h2>
+  <header class="page-header">
 
-<p>
-  From here you can manage your cars
-  and service appointments.
-</p>
+    <h1>
+      Dashboard
+    </h1>
 
-<a th:href="@{/cars}">
-  My Cars
-</a>
+    <p th:text="'Welcome back, ' + ${username} + '!'">
+    </p>
 
-<a th:href="@{/appointments}">
-  My Appointments
-</a>
+  </header>
 
-<a th:href="@{/appointments/add}">
-  Book Appointment
-</a>
+  <section class="card-grid">
 
-<br><br>
+    <article class="card">
 
-<div sec:authorize="hasRole('ADMIN')">
+      <h3>
+        🚗 My Cars
+      </h3>
 
-  <h2>Administration</h2>
+      <p>
+        Add, edit and manage the vehicles
+        connected to your AutoCare account.
+      </p>
 
-  <a th:href="@{/admin/services}">
-    Manage Services
-  </a>
+      <a th:href="@{/cars}">
+        View My Cars →
+      </a>
 
-  <a th:href="@{/admin/appointments}">
-    Manage Appointments
-  </a>
+    </article>
 
-  <a th:href="@{/admin/parts}">
-    Manage Spare Parts
-  </a>
+    <article class="card">
 
-  <a th:href="@{/admin/users}">
-    Manage Users
-  </a>
+      <h3>
+        📅 My Appointments
+      </h3>
+
+      <p>
+        Review your upcoming and previous
+        service appointments.
+      </p>
+
+      <a th:href="@{/appointments}">
+        View Appointments →
+      </a>
+
+    </article>
+
+    <article class="card">
+
+      <h3>
+        ➕ Book Service
+      </h3>
+
+      <p>
+        Choose your car and service and
+        schedule your next appointment.
+      </p>
+
+      <a th:href="@{/appointments/add}">
+        Book Appointment →
+      </a>
+
+    </article>
+
+    <article class="card">
+
+      <h3>
+        👤 My Profile
+      </h3>
+
+      <p>
+        View and update your personal
+        AutoCare profile information.
+      </p>
+
+      <a th:href="@{/users/profile}">
+        Manage Profile →
+      </a>
+
+    </article>
+
+  </section>
+
+  <section sec:authorize="hasRole('ADMIN')">
+
+    <div class="page-header">
+
+      <h2>
+        Administration
+      </h2>
+
+      <p>
+        Manage AutoCare services,
+        appointments, inventory and users.
+      </p>
+
+    </div>
+
+    <div class="card-grid">
+
+      <article class="card">
+
+        <h3>
+          🔧 Services
+        </h3>
+
+        <p>
+          Add, edit and activate
+          AutoCare service offers.
+        </p>
+
+        <a th:href="@{/admin/services}">
+          Manage Services →
+        </a>
+
+      </article>
+
+      <article class="card">
+
+        <h3>
+          📋 Appointments
+        </h3>
+
+        <p>
+          Review customer appointments
+          and update their status.
+        </p>
+
+        <a th:href="@{/admin/appointments}">
+          Manage Appointments →
+        </a>
+
+      </article>
+
+      <article class="card">
+
+        <h3>
+          📦 Spare Parts
+        </h3>
+
+        <p>
+          Manage inventory through the
+          AutoCare Parts microservice.
+        </p>
+
+        <a th:href="@{/admin/parts}">
+          Manage Parts →
+        </a>
+
+      </article>
+
+      <article class="card">
+
+        <h3>
+          👥 Users
+        </h3>
+
+        <p>
+          Review registered users
+          and manage application roles.
+        </p>
+
+        <a th:href="@{/admin/users}">
+          Manage Users →
+        </a>
+
+      </article>
+
+    </div>
+
+  </section>
+
+  <form th:action="@{/users/logout}"
+        method="post">
+
+    <button type="submit">
+      Logout
+    </button>
+
+  </form>
 
 </div>
-
-<br>
-
-<form th:action="@{/users/logout}"
-      method="post">
-
-  <button type="submit">
-    Logout
-  </button>
-
-</form>
 
 </body>
 </html>

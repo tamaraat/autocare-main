@@ -4,14 +4,23 @@
 
 <head>
   <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
   <title>My Appointments | AutoCare</title>
+
+  <link rel="stylesheet"
+        th:href="@{/css/style.css}">
 </head>
 
 <body>
 
-<h1>My Appointments</h1>
-
 <nav>
+
+  <div class="logo">
+    AutoCare
+  </div>
 
   <a th:href="@{/dashboard}">
     Dashboard
@@ -22,112 +31,148 @@
   </a>
 
   <a th:href="@{/appointments}">
-    My Appointments
+    Appointments
+  </a>
+
+  <a th:href="@{/services}">
+    Services
+  </a>
+
+  <a th:href="@{/users/profile}">
+    Profile
   </a>
 
 </nav>
 
-<hr>
+<div class="container">
 
-<p th:if="${param.booked}">
-  Appointment booked successfully.
-</p>
+  <header class="page-header">
 
-<p th:if="${param.cancelled}">
-  Appointment cancelled successfully.
-</p>
+    <h1>
+      My Appointments
+    </h1>
 
-<a th:href="@{/appointments/add}">
-  Book New Appointment
-</a>
+    <p>
+      View and manage your AutoCare
+      service appointments.
+    </p>
 
-<br><br>
+  </header>
 
-<div th:if="${#lists.isEmpty(appointments)}">
-
-  <p>
-    You do not have any appointments yet.
+  <p class="success-message"
+     th:if="${param.booked}">
+    Appointment booked successfully.
   </p>
 
-</div>
+  <p class="success-message"
+     th:if="${param.cancelled}">
+    Appointment cancelled successfully.
+  </p>
 
-<table
-        th:unless="${#lists.isEmpty(appointments)}"
-        border="1">
+  <div class="actions">
 
-  <thead>
+    <a th:href="@{/appointments/add}">
+      + Book New Appointment
+    </a>
 
-  <tr>
-    <th>Car</th>
-    <th>Registration</th>
-    <th>Service</th>
-    <th>Date and Time</th>
-    <th>Status</th>
-    <th>Action</th>
-  </tr>
+    <a th:href="@{/cars}">
+      My Cars
+    </a>
 
-  </thead>
+  </div>
 
-  <tbody>
+  <div class="card"
+       th:if="${#lists.isEmpty(appointments)}">
 
-  <tr th:each="appointment : ${appointments}">
+    <h3>
+      No appointments yet
+    </h3>
 
-    <td
-            th:text="${appointment.car.make + ' ' + appointment.car.model}">
-    </td>
+    <p>
+      When you book a service,
+      your appointments will appear here.
+    </p>
 
-    <td
-            th:text="${appointment.car.registrationNumber}">
-    </td>
+    <a th:href="@{/appointments/add}">
+      Book your first appointment →
+    </a>
 
-    <td
-            th:text="${appointment.serviceOffer.name}">
-    </td>
+  </div>
 
-    <td
-            th:text="${#temporals.format(appointment.appointmentTime, 'dd.MM.yyyy HH:mm')}">
-    </td>
+  <table th:unless="${#lists.isEmpty(appointments)}">
 
-    <td
-            th:text="${appointment.status}">
-    </td>
+    <thead>
 
-    <td>
+    <tr>
+      <th>Vehicle</th>
+      <th>Registration</th>
+      <th>Service</th>
+      <th>Date & Time</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
 
-      <form
-              th:if="${appointment.status.name() != 'CANCELLED' and appointment.status.name() != 'COMPLETED'}"
+    </thead>
+
+    <tbody>
+
+    <tr th:each="appointment : ${appointments}">
+
+      <td>
+        <strong th:text="${appointment.car.make + ' ' + appointment.car.model}">
+        </strong>
+      </td>
+
+      <td>
+                <span class="badge"
+                      th:text="${appointment.car.registrationNumber}">
+                </span>
+      </td>
+
+      <td th:text="${appointment.serviceOffer.name}">
+      </td>
+
+      <td th:text="${#temporals.format(appointment.appointmentTime, 'dd.MM.yyyy HH:mm')}">
+      </td>
+
+      <td>
+
+                <span class="badge"
+                      th:text="${appointment.status}">
+                </span>
+
+      </td>
+
+      <td>
+
+        <form th:if="${appointment.status.name() != 'CANCELLED'
+                              and appointment.status.name() != 'COMPLETED'}"
               th:action="@{/appointments/cancel/{id}(id=${appointment.id})}"
               method="post">
 
-        <button type="submit">
-          Cancel
-        </button>
+          <button type="submit">
+            Cancel
+          </button>
 
-      </form>
+        </form>
 
-      <span
-              th:if="${appointment.status.name() == 'CANCELLED'}">
-                Cancelled
-            </span>
+        <span th:if="${appointment.status.name() == 'CANCELLED'}">
+                    Cancelled
+                </span>
 
-      <span
-              th:if="${appointment.status.name() == 'COMPLETED'}">
-                Completed
-            </span>
+        <span th:if="${appointment.status.name() == 'COMPLETED'}">
+                    Completed
+                </span>
 
-    </td>
+      </td>
 
-  </tr>
+    </tr>
 
-  </tbody>
+    </tbody>
 
-</table>
+  </table>
 
-<br>
-
-<a th:href="@{/dashboard}">
-  Back to Dashboard
-</a>
+</div>
 
 </body>
 </html>

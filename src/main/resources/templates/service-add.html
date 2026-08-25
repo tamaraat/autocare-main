@@ -3,95 +3,142 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
+
     <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
     <title>Add Service | AutoCare</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
 </head>
 
 <body>
 
-<h1>Add Service</h1>
+<nav>
 
-<form th:action="@{/admin/services/add}"
-      th:object="${serviceOfferRequest}"
-      method="post">
-
-    <div>
-
-        <label for="name">
-            Service Name
-        </label>
-
-        <input id="name"
-               type="text"
-               th:field="*{name}"
-               placeholder="Oil Change">
-
-        <p th:if="${#fields.hasErrors('name')}"
-           th:errors="*{name}">
-        </p>
-
+    <div class="logo">
+        AutoCare Admin
     </div>
 
-    <br>
+    <a th:href="@{/dashboard}">
+        Dashboard
+    </a>
 
-    <div>
+    <a th:href="@{/admin/services}">
+        Services
+    </a>
 
-        <label for="price">
-            Price
-        </label>
+    <a th:href="@{/admin/appointments}">
+        Appointments
+    </a>
 
-        <input id="price"
-               type="number"
-               step="0.01"
-               th:field="*{price}"
-               placeholder="80.00">
+    <a th:href="@{/admin/parts}">
+        Parts
+    </a>
 
-        <p th:if="${#fields.hasErrors('price')}"
-           th:errors="*{price}">
+</nav>
+
+<div class="container">
+
+    <header class="page-header">
+
+        <h1>
+            Add Service
+        </h1>
+
+        <p>
+            Create a new service offer for
+            AutoCare customers.
         </p>
 
-    </div>
+    </header>
 
-    <br>
+    <form th:action="@{/admin/services/add}"
+          th:object="${serviceOfferRequest}"
+          method="post">
 
-    <div>
+        <div>
 
-        <label for="durationMinutes">
-            Duration in minutes
-        </label>
+            <label for="name">
+                Service Name
+            </label>
 
-        <input id="durationMinutes"
-               type="number"
-               th:field="*{durationMinutes}"
-               placeholder="60">
+            <input id="name"
+                   type="text"
+                   th:field="*{name}"
+                   placeholder="Oil Change">
 
-        <p th:if="${#fields.hasErrors('durationMinutes')}"
-           th:errors="*{durationMinutes}">
-        </p>
+            <p th:if="${#fields.hasErrors('name')}"
+               th:errors="*{name}">
+            </p>
 
-    </div>
+        </div>
 
-    <div th:if="${#fields.hasGlobalErrors()}">
+        <div>
 
-        <p th:each="error : ${#fields.globalErrors()}"
-           th:text="${error}">
-        </p>
+            <label for="price">
+                Price (€)
+            </label>
 
-    </div>
+            <input id="price"
+                   type="number"
+                   step="0.01"
+                   min="0.01"
+                   th:field="*{price}"
+                   placeholder="80.00">
 
-    <br>
+            <p th:if="${#fields.hasErrors('price')}"
+               th:errors="*{price}">
+            </p>
 
-    <button type="submit">
-        Add Service
-    </button>
+        </div>
 
-</form>
+        <div>
 
-<br>
+            <label for="durationMinutes">
+                Duration in Minutes
+            </label>
 
-<a th:href="@{/admin/services}">
-    Cancel
-</a>
+            <input id="durationMinutes"
+                   type="number"
+                   min="1"
+                   th:field="*{durationMinutes}"
+                   placeholder="60">
+
+            <p th:if="${#fields.hasErrors('durationMinutes')}"
+               th:errors="*{durationMinutes}">
+            </p>
+
+        </div>
+
+        <div class="error-message"
+             th:if="${#fields.hasGlobalErrors()}">
+
+            <p th:each="error : ${#fields.globalErrors()}"
+               th:text="${error}">
+            </p>
+
+        </div>
+
+        <div class="actions">
+
+            <button type="submit">
+                Add Service
+            </button>
+
+            <a th:href="@{/admin/services}">
+                Cancel
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
 
 </body>
 </html>

@@ -3,23 +3,60 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
+
     <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
     <title>Error | AutoCare</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
 </head>
 
 <body>
 
-<h1 th:text="${errorTitle}">
-    Error
-</h1>
+<div class="auth-page">
 
-<p th:text="${errorMessage}">
-    Something went wrong.
-</p>
+    <div class="auth-card">
 
-<a th:href="@{/dashboard}">
-    Back to Dashboard
-</a>
+        <h1>
+            Something went wrong
+        </h1>
+
+        <div class="error-message">
+
+            <h3 th:text="${errorTitle}">
+                Error
+            </h3>
+
+            <p th:text="${errorMessage}">
+                Something went wrong.
+            </p>
+
+        </div>
+
+        <p style="text-align: center;">
+
+            <a th:href="@{/dashboard}">
+                ← Back to Dashboard
+            </a>
+
+        </p>
+
+        <p style="text-align: center;">
+
+            <a th:href="@{/}">
+                Go to Home
+            </a>
+
+        </p>
+
+    </div>
+
+</div>
 
 </body>
 </html>

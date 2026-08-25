@@ -3,109 +3,173 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
+
     <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
     <title>Spare Parts | AutoCare</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
 </head>
 
 <body>
 
-<h1>Spare Parts Management</h1>
+<nav>
 
-<a th:href="@{/admin/parts/add}">
-    Add New Part
-</a>
+    <div class="logo">
+        AutoCare Admin
+    </div>
 
-<br><br>
+    <a th:href="@{/dashboard}">
+        Dashboard
+    </a>
 
-<p th:if="${param.added}">
-    Spare part added successfully.
-</p>
+    <a th:href="@{/admin/services}">
+        Services
+    </a>
 
-<p th:if="${param.edited}">
-    Spare part updated successfully.
-</p>
+    <a th:href="@{/admin/appointments}">
+        Appointments
+    </a>
 
-<p th:if="${param.stockUpdated}">
-    Stock quantity updated successfully.
-</p>
+    <a th:href="@{/admin/parts}">
+        Parts
+    </a>
 
-<p th:if="${param.deleted}">
-    Spare part deleted successfully.
-</p>
+    <a th:href="@{/admin/users}">
+        Users
+    </a>
 
-<div th:if="${#lists.isEmpty(parts)}">
+</nav>
 
-    <p>
-        No spare parts are available.
+<div class="container">
+
+    <header class="page-header">
+
+        <h1>
+            Spare Parts Inventory
+        </h1>
+
+        <p>
+            Manage parts and stock through
+            the AutoCare Parts microservice.
+        </p>
+
+    </header>
+
+    <p class="success-message"
+       th:if="${param.added}">
+        Spare part added successfully.
     </p>
 
+    <p class="success-message"
+       th:if="${param.edited}">
+        Spare part updated successfully.
+    </p>
+
+    <p class="success-message"
+       th:if="${param.stockUpdated}">
+        Stock quantity updated successfully.
+    </p>
+
+    <p class="success-message"
+       th:if="${param.deleted}">
+        Spare part deleted successfully.
+    </p>
+
+    <div class="actions">
+
+        <a th:href="@{/admin/parts/add}">
+            + Add New Part
+        </a>
+
+    </div>
+
+    <div class="card"
+         th:if="${#lists.isEmpty(parts)}">
+
+        <h3>
+            No spare parts
+        </h3>
+
+        <p>
+            The inventory currently contains
+            no spare parts.
+        </p>
+
+    </div>
+
+    <table th:unless="${#lists.isEmpty(parts)}">
+
+        <thead>
+
+        <tr>
+            <th>Name</th>
+            <th>Part Number</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Actions</th>
+        </tr>
+
+        </thead>
+
+        <tbody>
+
+        <tr th:each="part : ${parts}">
+
+            <td>
+                <strong th:text="${part.name}">
+                </strong>
+            </td>
+
+            <td>
+                <span class="badge"
+                      th:text="${part.partNumber}">
+                </span>
+            </td>
+
+            <td th:text="${part.quantity}">
+            </td>
+
+            <td th:text="${part.price + ' €'}">
+            </td>
+
+            <td>
+
+                <div class="actions">
+
+                    <a th:href="@{/admin/parts/edit/{id}(id=${part.id})}">
+                        Edit
+                    </a>
+
+                    <a th:href="@{/admin/parts/stock/{id}(id=${part.id})}">
+                        Stock
+                    </a>
+
+                    <form th:action="@{/admin/parts/delete/{id}(id=${part.id})}"
+                          method="post">
+
+                        <button type="submit">
+                            Delete
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </td>
+
+        </tr>
+
+        </tbody>
+
+    </table>
+
 </div>
-
-<table th:unless="${#lists.isEmpty(parts)}"
-       border="1">
-
-    <thead>
-
-    <tr>
-        <th>Name</th>
-        <th>Part Number</th>
-        <th>Quantity</th>
-        <th>Price</th>
-        <th>Actions</th>
-    </tr>
-
-    </thead>
-
-    <tbody>
-
-    <tr th:each="part : ${parts}">
-
-        <td th:text="${part.name}">
-        </td>
-
-        <td th:text="${part.partNumber}">
-        </td>
-
-        <td th:text="${part.quantity}">
-        </td>
-
-        <td th:text="${part.price + ' €'}">
-        </td>
-
-        <td>
-
-            <a th:href="@{/admin/parts/edit/{id}(id=${part.id})}">
-                Edit
-            </a>
-
-            <a th:href="@{/admin/parts/stock/{id}(id=${part.id})}">
-                Change Stock
-            </a>
-
-            <form
-                    th:action="@{/admin/parts/delete/{id}(id=${part.id})}"
-                    method="post"
-                    style="display:inline;">
-
-                <button type="submit">
-                    Delete
-                </button>
-
-            </form>
-
-        </td>
-
-    </tr>
-
-    </tbody>
-
-</table>
-
-<br>
-
-<a th:href="@{/dashboard}">
-    Back to Dashboard
-</a>
 
 </body>
 </html>

@@ -1,31 +1,151 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
     <title>AutoCare</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
 </head>
 
 <body>
 
-<h1>AutoCare</h1>
-
-<h2>Professional care for your car</h2>
-
-<p>Book a service appointment quickly and easily.</p>
-
 <nav>
 
-    <a th:href="@{/services}">Services</a>
+    <div class="logo">
+        AutoCare
+    </div>
 
-    <a th:href="@{/}">Home</a>
+    <a th:href="@{/}">
+        Home
+    </a>
 
-    <a th:href="@{/users/login}">Login</a>
+    <a th:href="@{/services}">
+        Services
+    </a>
 
-    <a th:href="@{/users/register}">Register</a>
+    <a sec:authorize="isAnonymous()"
+       th:href="@{/users/login}">
+        Login
+    </a>
+
+    <a sec:authorize="isAnonymous()"
+       th:href="@{/users/register}">
+        Register
+    </a>
+
+    <a sec:authorize="isAuthenticated()"
+       th:href="@{/dashboard}">
+        Dashboard
+    </a>
 
 </nav>
+
+<section class="hero">
+
+    <h1>
+        Professional care for your car.
+    </h1>
+
+    <h2>
+        Simple. Reliable. AutoCare.
+    </h2>
+
+    <p>
+        Manage your vehicles, explore available services
+        and book your next service appointment quickly
+        and easily.
+    </p>
+
+    <div class="actions">
+
+        <a sec:authorize="isAnonymous()"
+           th:href="@{/users/register}">
+            Get Started
+        </a>
+
+        <a sec:authorize="isAuthenticated()"
+           th:href="@{/appointments/add}">
+            Book Appointment
+        </a>
+
+        <a th:href="@{/services}">
+            View Services
+        </a>
+
+    </div>
+
+</section>
+
+<div class="container">
+
+    <div class="page-header">
+
+        <h2>
+            Everything your car needs in one place
+        </h2>
+
+        <p>
+            AutoCare makes vehicle maintenance easier
+            by keeping your cars, appointments and
+            services organized.
+        </p>
+
+    </div>
+
+    <section class="card-grid">
+
+        <article class="card">
+
+            <h3>
+                🚗 Your Vehicles
+            </h3>
+
+            <p>
+                Add and manage your vehicles and keep
+                their information available whenever
+                you need it.
+            </p>
+
+        </article>
+
+        <article class="card">
+
+            <h3>
+                📅 Easy Booking
+            </h3>
+
+            <p>
+                Choose your vehicle, select a service
+                and schedule an appointment in just
+                a few steps.
+            </p>
+
+        </article>
+
+        <article class="card">
+
+            <h3>
+                🔧 Professional Service
+            </h3>
+
+            <p>
+                Browse available AutoCare services
+                and find the right maintenance option
+                for your vehicle.
+            </p>
+
+        </article>
+
+    </section>
+
+</div>
 
 </body>
 </html>

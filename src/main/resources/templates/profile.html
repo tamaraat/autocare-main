@@ -3,85 +3,146 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
+
     <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
     <title>My Profile | AutoCare</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
 </head>
 
 <body>
 
-<h1>My Profile</h1>
+<nav>
 
-<p>
-    Username:
-    <strong th:text="${username}">
-    </strong>
-</p>
+    <div class="logo">
+        AutoCare
+    </div>
 
-<p>
-    Role:
-    <strong th:text="${role}">
-    </strong>
-</p>
+    <a th:href="@{/dashboard}">
+        Dashboard
+    </a>
 
-<p th:if="${param.updated}">
-    Profile updated successfully.
-</p>
+    <a th:href="@{/cars}">
+        My Cars
+    </a>
 
-<form th:action="@{/users/profile}"
-      th:object="${profileRequest}"
-      method="post">
+    <a th:href="@{/appointments}">
+        Appointments
+    </a>
 
-    <div>
+    <a th:href="@{/services}">
+        Services
+    </a>
 
-        <label for="firstName">
-            First Name
-        </label>
+    <a th:href="@{/users/profile}">
+        Profile
+    </a>
 
-        <input id="firstName"
-               type="text"
-               th:field="*{firstName}">
+</nav>
 
-        <p th:if="${#fields.hasErrors('firstName')}"
-           th:errors="*{firstName}">
+<div class="container">
+
+    <header class="page-header">
+
+        <h1>
+            My Profile
+        </h1>
+
+        <p>
+            View and update your AutoCare
+            account information.
+        </p>
+
+    </header>
+
+    <p class="success-message"
+       th:if="${param.updated}">
+        Profile updated successfully.
+    </p>
+
+    <div class="card">
+
+        <h3>
+            Account
+        </h3>
+
+        <p>
+            Username:
+            <strong th:text="${username}">
+            </strong>
+        </p>
+
+        <p>
+            Account role:
+            <span class="badge"
+                  th:text="${role}">
+            </span>
         </p>
 
     </div>
 
-    <div>
+    <form th:action="@{/users/profile}"
+          th:object="${profileRequest}"
+          method="post">
 
-        <label for="lastName">
-            Last Name
-        </label>
+        <h2>
+            Personal Information
+        </h2>
 
-        <input id="lastName"
-               type="text"
-               th:field="*{lastName}">
+        <div>
 
-        <p th:if="${#fields.hasErrors('lastName')}"
-           th:errors="*{lastName}">
-        </p>
+            <label for="firstName">
+                First Name
+            </label>
 
-    </div>
+            <input id="firstName"
+                   type="text"
+                   th:field="*{firstName}">
 
-    <div th:if="${#fields.hasGlobalErrors()}">
+            <p th:if="${#fields.hasErrors('firstName')}"
+               th:errors="*{firstName}">
+            </p>
 
-        <p th:each="error : ${#fields.globalErrors()}"
-           th:text="${error}">
-        </p>
+        </div>
 
-    </div>
+        <div>
 
-    <button type="submit">
-        Save Changes
-    </button>
+            <label for="lastName">
+                Last Name
+            </label>
 
-</form>
+            <input id="lastName"
+                   type="text"
+                   th:field="*{lastName}">
 
-<br>
+            <p th:if="${#fields.hasErrors('lastName')}"
+               th:errors="*{lastName}">
+            </p>
 
-<a th:href="@{/dashboard}">
-    Back to Dashboard
-</a>
+        </div>
+
+        <div class="error-message"
+             th:if="${#fields.hasGlobalErrors()}">
+
+            <p th:each="error : ${#fields.globalErrors()}"
+               th:text="${error}">
+            </p>
+
+        </div>
+
+        <button type="submit">
+            Save Changes
+        </button>
+
+    </form>
+
+</div>
 
 </body>
 </html>
