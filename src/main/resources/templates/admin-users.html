@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Users | AutoCare</title>
+</head>
+
+<body>
+
+<h1>Manage Users</h1>
+
+<p th:if="${param.roleChanged}">
+    User role changed successfully.
+</p>
+
+<table border="1">
+
+    <thead>
+
+    <tr>
+        <th>Username</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Role</th>
+        <th>Action</th>
+    </tr>
+
+    </thead>
+
+    <tbody>
+
+    <tr th:each="user : ${users}">
+
+        <td th:text="${user.username}">
+        </td>
+
+        <td th:text="${user.firstName}">
+        </td>
+
+        <td th:text="${user.lastName}">
+        </td>
+
+        <td th:text="${user.role}">
+        </td>
+
+        <td>
+
+            <form th:action="@{/admin/users/{id}/role(id=${user.id})}"
+                  method="post">
+
+                <button type="submit"
+                        th:text="${user.role.name() == 'ADMIN'
+                        ? 'Make Customer'
+                        : 'Make Admin'}">
+                </button>
+
+            </form>
+
+        </td>
+
+    </tr>
+
+    </tbody>
+
+</table>
+
+<br>
+
+<a th:href="@{/dashboard}">
+    Back to Dashboard
+</a>
+
+</body>
+</html>

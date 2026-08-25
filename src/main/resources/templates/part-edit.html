@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Spare Part | AutoCare</title>
+</head>
+
+<body>
+
+<h1>Edit Spare Part</h1>
+
+<form
+        th:action="@{/admin/parts/edit/{id}(id=${partId})}"
+        th:object="${sparePartRequest}"
+        method="post">
+
+    <div>
+
+        <label for="name">
+            Part Name
+        </label>
+
+        <input
+                id="name"
+                type="text"
+                th:field="*{name}">
+
+        <p th:if="${#fields.hasErrors('name')}"
+           th:errors="*{name}">
+        </p>
+
+    </div>
+
+    <br>
+
+    <div>
+
+        <label for="partNumber">
+            Part Number
+        </label>
+
+        <input
+                id="partNumber"
+                type="text"
+                th:field="*{partNumber}">
+
+        <p th:if="${#fields.hasErrors('partNumber')}"
+           th:errors="*{partNumber}">
+        </p>
+
+    </div>
+
+    <br>
+
+    <div>
+
+        <label for="quantity">
+            Quantity
+        </label>
+
+        <input
+                id="quantity"
+                type="number"
+                min="0"
+                th:field="*{quantity}">
+
+        <p th:if="${#fields.hasErrors('quantity')}"
+           th:errors="*{quantity}">
+        </p>
+
+    </div>
+
+    <br>
+
+    <div>
+
+        <label for="price">
+            Price
+        </label>
+
+        <input
+                id="price"
+                type="number"
+                step="0.01"
+                min="0.01"
+                th:field="*{price}">
+
+        <p th:if="${#fields.hasErrors('price')}"
+           th:errors="*{price}">
+        </p>
+
+    </div>
+
+    <br>
+
+    <button type="submit">
+        Save Changes
+    </button>
+
+</form>
+
+<br>
+
+<a th:href="@{/admin/parts}">
+    Cancel
+</a>
+
+</body>
+</html>

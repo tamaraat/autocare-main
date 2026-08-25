@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Spare Parts | AutoCare</title>
+</head>
+
+<body>
+
+<h1>Spare Parts Management</h1>
+
+<a th:href="@{/admin/parts/add}">
+    Add New Part
+</a>
+
+<br><br>
+
+<p th:if="${param.added}">
+    Spare part added successfully.
+</p>
+
+<p th:if="${param.edited}">
+    Spare part updated successfully.
+</p>
+
+<p th:if="${param.stockUpdated}">
+    Stock quantity updated successfully.
+</p>
+
+<p th:if="${param.deleted}">
+    Spare part deleted successfully.
+</p>
+
+<div th:if="${#lists.isEmpty(parts)}">
+
+    <p>
+        No spare parts are available.
+    </p>
+
+</div>
+
+<table th:unless="${#lists.isEmpty(parts)}"
+       border="1">
+
+    <thead>
+
+    <tr>
+        <th>Name</th>
+        <th>Part Number</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Actions</th>
+    </tr>
+
+    </thead>
+
+    <tbody>
+
+    <tr th:each="part : ${parts}">
+
+        <td th:text="${part.name}">
+        </td>
+
+        <td th:text="${part.partNumber}">
+        </td>
+
+        <td th:text="${part.quantity}">
+        </td>
+
+        <td th:text="${part.price + ' €'}">
+        </td>
+
+        <td>
+
+            <a th:href="@{/admin/parts/edit/{id}(id=${part.id})}">
+                Edit
+            </a>
+
+            <a th:href="@{/admin/parts/stock/{id}(id=${part.id})}">
+                Change Stock
+            </a>
+
+            <form
+                    th:action="@{/admin/parts/delete/{id}(id=${part.id})}"
+                    method="post"
+                    style="display:inline;">
+
+                <button type="submit">
+                    Delete
+                </button>
+
+            </form>
+
+        </td>
+
+    </tr>
+
+    </tbody>
+
+</table>
+
+<br>
+
+<a th:href="@{/dashboard}">
+    Back to Dashboard
+</a>
+
+</body>
+</html>

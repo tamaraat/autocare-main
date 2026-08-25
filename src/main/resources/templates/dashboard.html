@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
   <meta charset="UTF-8">
@@ -20,8 +21,16 @@
     Dashboard
   </a>
 
+  <a th:href="@{/users/profile}">
+    My Profile
+  </a>
+
   <a th:href="@{/cars}">
     My Cars
+  </a>
+
+  <a th:href="@{/appointments}">
+    My Appointments
   </a>
 
 </nav>
@@ -49,15 +58,29 @@
 
 <br><br>
 
-<a th:href="@{/admin/services}">
-  Manage Services
-</a>
+<div sec:authorize="hasRole('ADMIN')">
 
-<a th:href="@{/admin/appointments}">
-  Manage Appointments
-</a>
+  <h2>Administration</h2>
 
-<br><br>
+  <a th:href="@{/admin/services}">
+    Manage Services
+  </a>
+
+  <a th:href="@{/admin/appointments}">
+    Manage Appointments
+  </a>
+
+  <a th:href="@{/admin/parts}">
+    Manage Spare Parts
+  </a>
+
+  <a th:href="@{/admin/users}">
+    Manage Users
+  </a>
+
+</div>
+
+<br>
 
 <form th:action="@{/users/logout}"
       method="post">

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Update Stock | AutoCare</title>
+</head>
+
+<body>
+
+<h1>Update Stock Quantity</h1>
+
+<form
+        th:action="@{/admin/parts/stock/{id}(id=${partId})}"
+        th:object="${stockUpdateRequest}"
+        method="post">
+
+    <div>
+
+        <label for="quantity">
+            New Quantity
+        </label>
+
+        <input
+                id="quantity"
+                type="number"
+                min="0"
+                th:field="*{quantity}">
+
+        <p th:if="${#fields.hasErrors('quantity')}"
+           th:errors="*{quantity}">
+        </p>
+
+    </div>
+
+    <br>
+
+    <button type="submit">
+        Update Stock
+    </button>
+
+</form>
+
+<br>
+
+<a th:href="@{/admin/parts}">
+    Cancel
+</a>
+
+</body>
+</html>

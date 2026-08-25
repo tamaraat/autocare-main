@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>My Profile | AutoCare</title>
+</head>
+
+<body>
+
+<h1>My Profile</h1>
+
+<p>
+    Username:
+    <strong th:text="${username}">
+    </strong>
+</p>
+
+<p>
+    Role:
+    <strong th:text="${role}">
+    </strong>
+</p>
+
+<p th:if="${param.updated}">
+    Profile updated successfully.
+</p>
+
+<form th:action="@{/users/profile}"
+      th:object="${profileRequest}"
+      method="post">
+
+    <div>
+
+        <label for="firstName">
+            First Name
+        </label>
+
+        <input id="firstName"
+               type="text"
+               th:field="*{firstName}">
+
+        <p th:if="${#fields.hasErrors('firstName')}"
+           th:errors="*{firstName}">
+        </p>
+
+    </div>
+
+    <div>
+
+        <label for="lastName">
+            Last Name
+        </label>
+
+        <input id="lastName"
+               type="text"
+               th:field="*{lastName}">
+
+        <p th:if="${#fields.hasErrors('lastName')}"
+           th:errors="*{lastName}">
+        </p>
+
+    </div>
+
+    <div th:if="${#fields.hasGlobalErrors()}">
+
+        <p th:each="error : ${#fields.globalErrors()}"
+           th:text="${error}">
+        </p>
+
+    </div>
+
+    <button type="submit">
+        Save Changes
+    </button>
+
+</form>
+
+<br>
+
+<a th:href="@{/dashboard}">
+    Back to Dashboard
+</a>
+
+</body>
+</html>
